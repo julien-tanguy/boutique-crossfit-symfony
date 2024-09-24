@@ -1,80 +1,86 @@
-
 <!doctype html>
 <html lang="fr" data-bs-theme="auto">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>La Boutique CrossFit - 100% CrossFit!</title>
-    <meta name="description" content="La boutique spécialisée dans le crossfit">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>La Boutique CrossFit - 100% CrossFit!</title>
+		<meta name="description" content="La boutique spécialisée dans le crossfit">
 
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+		<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 
-    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+		<link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
+		<link
+		rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
-    <!-- Custom styles for this template -->
-    <link href="{{ asset('assets/css/carousel.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet">
-    <script src="https://unpkg.com/feather-icons"></script>
-</head>
-<body>
+		<!-- Custom styles for this template -->
+		<link href="{{ asset('assets/css/carousel.css') }}" rel="stylesheet">
+		<link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet">
+		<script src="https://unpkg.com/feather-icons"></script>
+	</head>
+	<body>
 
-<header data-bs-theme="dark">
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{{ path('app_home') }}">La Boutique CrossFit</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{ path('app_home') }}">Acceuil</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                </ul>
-                <div class="speed-menu">
-                {% if app.user %}
-                    <a href="{{ path('app_account') }}"><i class="bi bi-person-circle" data-feather="user"></i> {{ app.user.firstname }}</a>
-                {% else %}
-                    <a href="{{ path('app_login') }}"><i class="bi bi-person-circle" data-feather="user"></i></a>
-                {% endif %}
-                    <a href=""><i class="bi bi-bag" data-feather="shopping-cart"></i></a>
-                </div>
-            </div>
-        </div>
-    </nav>
-</header>
+		<header data-bs-theme="dark">
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="{{ path('app_home') }}">La Boutique CrossFit</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link active" aria-current="page" href="{{ path('app_home') }}">Acceuil</a>
+							</li>
+							{% for category in allCategories %}
+								<li class="nav-item">
+									<a class="nav-link" href="{{ path('app_category', {'slug': category.slug}) }}">{{category.name}}</a>
+								</li>
+							{% endfor %}
+						</ul>
+						<div class="speed-menu">
+							{% if app.user %}
+								<a href="{{ path('app_account') }}">
+									<i class="bi bi-person-circle" data-feather="user"></i>
+									{{ app.user.firstname }}</a>
+							{% else %}
+								<a href="{{ path('app_login') }}">
+									<i class="bi bi-person-circle" data-feather="user"></i>
+								</a>
+							{% endif %}
+							<a href="{{ path('app_cart') }}">
+								<i class="bi bi-bag" data-feather="shopping-cart"></i>
+								<span class="badge text-bg-info">{{fullCartQuantity}}</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</nav>
+		</header>
 
-<main>
-    <div class='container text-center'>
-        {% for label, messages in app.flashes %}
-            {% for message in messages %}
-                <div class=" mt-4 alert alert-{{ label }}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endfor %}
-    </div>
+		<main>
+			<div class='container text-center'>
+				{% for label, messages in app.flashes %}
+					{% for message in messages %}
+						<div class=" mt-4 alert alert-{{ label }}">
+							{{ message }}
+						</div>
+					{% endfor %}
+				{% endfor %}
+			</div>
 
-    {% block body %}{% endblock %}
+			{% block body %}{% endblock %}
 
-    <!-- FOOTER -->
-    <footer class="container">
-        <p>&copy; 2017–2024 La Boutique CrossFit <a href="#">CGV</a> &middot; <a href="#">CGU</a></p>
-    </footer>
-</main>
+			<!-- FOOTER -->
+			<footer class="container">
+				<p>&copy; 2017–2024 La Boutique CrossFit
+					<a href="#">CGV</a>
+					&middot;
+					<a href="#">CGU</a>
+				</p>
+			</footer>
+		</main>
 
-<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
-<script src="asset{{'assets/js/global.js' }}"></script>
-</body>
+		<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+		<script src="asset{{'assets/js/global.js' }}"></script>
+	</body>
 </html>
-

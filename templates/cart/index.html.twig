@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container my-5">
+		<h1>Mon panier</h1>
+		<div class='row'>
+			<div class='col-md-8'>
+				<h2>liste de mes produits</h2>
+				{% for product in cart %}
+					<div class="row bg-raduis-ligth-blue custom-border m-3 p-4">
+						<div class="col-md-2">
+							<img src="/uploads/{{ product.product.illustration }}" alt="{{ product.product.name }}" class="img-fluid rounded-3" style="width: 65px;">
+						</div>
+						<div class="col-md-4">
+							<h5>{{ product.product.name }}</h5>
+							<p class="small mb-0">{{ product.product.priceWt|price }}</p>
+						</div>
+						<div class="col-md-3">
+							<h5 class="mb-0">
+								<a class="link-no-decoration" href="{{ path('app_cart_decrease', {'id': product.product.id}) }}">-
+								</a>
+								{{ product.qty }}<a class="link-no-decoration" href="{{ path('app_cart_add', {'id': product.product.id}) }}">
+									+</a>
+							</h5>
+						</div>
+						<div class="col-md-3">
+							<h5 class="mb-0">{{ (product.product.priceWt * product.qty) |price }}</h5>
+						</div>
+					</div>
+				{% endfor %}
+				<a class="m-3" href="{{ path('app_cart_remove') }}">Vider votre panier</a>
+			</div>
+			<div class='col-md-4'>
+				<h2>récap de mon panier</h2>
+				<div class=" bg-raduis-ligth-blue custom-border m-3 p-4">
+					<div class="col-md-4">
+						<h5>Total produits :</h5>
+						<p class="small mb-0">{{fullCartQuantity}}</p>
+						<hr class="hr"/>
+						<h5>Prix total :</h5>
+						<p class="small mb-0">{{totalPriceWt|price}}</p>
+					</div>
+				</div>
+				<a href="" class="m-3 btn btn-primary shadow-0 w-100">
+					<i class="bi bi-bag-fill"></i>
+					Commander</a>
+			</div>
+		</div>
+	</div>
+</div>{% endblock %}
