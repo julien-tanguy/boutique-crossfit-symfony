@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container my-5">
+		<h1>Récapitulatif de ma commande</h1>
+		<div class='row'>
+			<div class='col-md-8'>
+				<div class=" bg-raduis-ligth-blue custom-border m-3 p-4">
+					<h5>Contenu de votre panier :</h5>
+					{% for product in cart %}
+						<div class="row my-3">
+							<div class="col-md-2">
+								<img src="/uploads/{{ product.product.illustration }}" alt="{{ product.product.name }}" class="img-fluid rounded-3" style="width: 65px;">
+							</div>
+							<div class="col-md-4">
+								<h5>{{ product.product.name }}</h5>
+								<p class="small mb-0">{{ product.product.priceWt|price }}</p>
+							</div>
+							<div class="col-md-3">
+								<p class="mb-0">{{ product.qty }}</p>
+							</div>
+							<div class="col-md-3">
+								<h5 class="mb-0">{{ (product.product.priceWt * product.qty) |price }}</h5>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+
+
+				<div class=" bg-raduis-ligth-blue custom-border m-3 p-4">
+					<h5>Votre adresse de livraison :
+					</h5>
+					<p class="small mb-0">
+						{{ choices.addresses.lastname }}
+						{{ choices.addresses.firstname }}</p>
+					<p class="small mb-0">{{ choices.addresses.adress }}</p>
+					<p class="small mb-0">{{ choices.addresses.postal }}</p>
+					<p class="small mb-0">{{ choices.addresses.city }}
+						-
+						{{ choices.addresses.country }}</p>
+				</div>
+				<div class=" bg-raduis-ligth-blue custom-border m-3 p-4">
+					<h5>Votre transporteur :
+					</h5>
+					<p class="small mb-0">{{ choices.carriers.name }}</p>
+					<p class="small mb-0">{{ choices.carriers.description }}</p>
+				</div>
+
+			</div>
+
+			<div class='col-md-4'>
+				<div class=" bg-raduis-ligth-blue custom-border mt-3 mb-3 p-4">
+					<div class="col-md-4">
+						<h5>Total produits :</h5>
+						<p class="small mb-0">{{totalPriceWt|price}}</p>
+						<hr class="hr"/>
+						<h5>Frais de livraion :</h5>
+						<p class="small mb-0">{{ choices.carriers.price|price }}</p>
+						<hr class="hr"/>
+						<h5>Prix total commande :</h5>
+						<p class="small mb-0">{{(totalPriceWt + choices.carriers.price)|price}}</p>
+					</div>
+				</div>
+				<a href="{{ path('app_order') }}" class="m-3 btn btn-primary shadow-0 w-100">
+					<i class="bi bi-credit-card-fill"></i>
+					Payer</a>
+			</div>
+		</div>
+	</div>
+</div>{% endblock %}

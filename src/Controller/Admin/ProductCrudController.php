@@ -34,7 +34,7 @@ class ProductCrudController extends AbstractCrudController
     {
         // Permettre de ne pas avoir a recharger les images d'un produit lors de la modification :
         $required = true;
-        if($pageName == 'edit'){
+        if ($pageName == 'edit') {
             $required = false;
         }
 

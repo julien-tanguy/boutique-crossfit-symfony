@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container my-5 small-container">
+		<h1>Ma commande</h1>
+		<div
+			class="">
+			{# Créer un formulaire avec la méthode form() et injecter le parametre deliveryForm du OrderController #}
+			{{form_start(deliveryForm)}}
+			{{form_row(deliveryForm.addresses)}}
+			<a class="small" href="{{ path('app_account_adresses') }}">Ajouter ou modifier une adresse ></a>
+			<hr>
+			{{form_row(deliveryForm.carriers)}}
+			{{form_end(deliveryForm)}}
+		</div>
+	</div>
+{% endblock %}

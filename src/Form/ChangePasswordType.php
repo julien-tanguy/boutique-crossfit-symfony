@@ -31,29 +31,29 @@ class ChangePasswordType extends AbstractType
                 'type' => PasswordType::class,
                 'required' => true,
                 'label' => 'nouveau mot de passe',
-                'invalid_message'=>'le nouveau mot de passe et la confirmation doivent être identique.',
+                'invalid_message' => 'le nouveau mot de passe et la confirmation doivent être identique.',
                 'first_options' => [
                     'label' => 'Nouveau mot de passe',
                     'attr' => [
                         'placeholder' => 'Saisir votre nouveau mot de passe'
                     ],
                     'hash_property_path' => 'password',
-                    ],
+                ],
                 'second_options' => [
                     'label' => 'Confirmation nouveau mot de passe',
                     'attr' => [
                         'placeholder' => 'Saisir la confirmation du mot de passe'
                     ]
-                    ],
+                ],
                 'mapped' => false,
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Modifier mon mot de passe',
                 'attr' => [
-                        'class' => 'btn btn-success'
-                    ]
+                    'class' => 'btn btn-primary'
+                ]
             ])
-            ->addEventListener(FormEvents::SUBMIT, function (FormEvent $event){
+            ->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
                 // Importer le form :
                 $form = $event->getForm();
                 // Récuperer le mot de passe actuel saisi dans le form :
@@ -68,7 +68,7 @@ class ChangePasswordType extends AbstractType
                     $old_password_input
                 );
                 // Si is valid est false, creer un message d'erreur :
-                if(!$isValid){
+                if (!$isValid) {
                     $form->get('old_password_input')->addError(new FormError('Votre mot de passe est incorect.'));
                 }
             })

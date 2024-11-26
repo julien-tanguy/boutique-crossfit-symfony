@@ -1,0 +1,67 @@
+{% extends "@!EasyAdmin/layout.html.twig" %}
+
+{% block main %}
+	<h3>Commande n°{{order.id}}</h3>
+	<p>
+		<span>Crée le :
+			{{order.createdAt|date("d/m/Y")}}</span>
+	</p>
+
+	{{ include("admin/state.html.twig", {field : {'value' : order.state}}) }}
+	<div class="row mt-5">
+		<div class="col-md-6">
+			<p>
+				<strong>Adresse de livraison :</strong>
+			</p>
+			<p>{{order.delivery|raw}}</p>
+		</div>
+		<div class="col-md-6">
+			<p>
+				<strong>Transporteur :</strong>
+			</p>
+			<p>{{order.carrierName}}</p>
+		</div>
+	</div>
+	<div class="row mt-5">
+		<table class="table table-dark">
+			<thead>
+				<tr>
+					<th scope="col">Illustration</th>
+					<th scope="col">Designation</th>
+					<th scope="col">Quantité</th>
+					<th scope="col">Prix HT</th>
+					<th scope="col">TVA</th>
+					<th scope="col">Prix TTC</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for product in order.orderDetails %}
+					<tr>
+						<th scope="col"><img src="/uploads/{{ product.productIllustration }}" alt="{{ product.productName }}" class="img-fluid rounded-3" style="width: 65px;"></th>
+						<th scope="col">{{ product.productName }}</th>
+						<th scope="col">{{ product.productQuantity }}</th>
+						<th scope="col">{{ product.productPrice|price }}</th>
+						<th scope="col">{{ product.productTva }}%</th>
+						{# Déclarer une variable : #}
+						{% set coeff = 1 + (product.productTva / 100)%}
+						<th scope="col">{{ ((product.productPrice * coeff) * product.productQuantity)|price }}</th>
+					</tr>
+				{% endfor %}
+				<tr>
+					<th scope="col"></th>
+					<th scope="col">{{order.carrierName}}</th>
+					<th scope="col">1</th>
+					<th scope="col"></th>
+					<th scope="col"></th>
+					<th scope="col">{{order.carrierPrice|price}}</th>
+				</tr>
+			</tbody>
+		</table>
+		<div class="text-right p-5 fs-5">
+			<strong>Total de commande :
+				{{order.totalWt|price}}</strong>
+		</div>
+	</div>
+	<pre>
+</pre>
+{% endblock %}

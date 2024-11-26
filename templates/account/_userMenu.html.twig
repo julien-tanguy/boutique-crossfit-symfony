@@ -1,14 +1,21 @@
 <ul class="nav flex-column bg-raduis-ligth-blue">
-  <li class="nav-item">
-    <a class="nav-link" href="{{ path('app_account') }}">Mes commandes</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Mes adresses</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="{{ path('app_account_modify_pwd') }}">Modifier mon mot de passe</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="{{ path('app_logout') }}">Me deconnecter</a>
-  </li>
+	<li class="nav-item">
+		<a class="nav-link" href="{{ path('app_account') }}">Mes commandes</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" href="{{ path('app_account_adresses') }}">Mes adresses</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" href="{{ path('app_account_modify_pwd') }}">Modifier mon mot de passe</a>
+	</li>
+	{% if is_granted('ROLE_ADMIN') %}
+		<li class="nav-item">
+			<a class="nav-link" href="{{ path('admin') }}">Admin</a>
+		</li>
+	{% endif %}
+	<li class="nav-item">
+		<a class="nav-link" href="{{ path('app_logout') }}">Me deconnecter
+			<i class="bi bi-box-arrow-right"></i>
+		</a>
+	</li>
 </ul>
